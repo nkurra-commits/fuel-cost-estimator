@@ -10,7 +10,7 @@
             text-align: center;
         }
         .box {
-            margin-top: 60px;
+            margin-top: 50px;
         }
         input, select, button {
             padding: 10px;
@@ -30,22 +30,27 @@
 <div class="box">
     <h1>Fuel Cost Estimator 🚗</h1>
 
-    <!-- Vehicle Type -->
-    <select id="vehicle">
+    <!-- VEHICLE -->
+    <select id="vehicle" onchange="setMileage()">
         <option value="">Select Vehicle</option>
         <option value="bike">Bike</option>
         <option value="car">Car</option>
+        <option value="auto">Auto (Rickshaw)</option>
+        <option value="bus">Bus</option>
+        <option value="truck">Truck</option>
+        <option value="tractor">Tractor</option>
+        <option value="van">Van</option>
     </select><br>
 
-    <!-- Fuel Type -->
+    <!-- FUEL -->
     <select id="fuelType" onchange="setFuelPrice()">
         <option value="">Select Fuel Type</option>
         <option value="petrol">Petrol</option>
         <option value="diesel">Diesel</option>
-        <option value="gas">Gas (CNG)</option>
+        <option value="cng">CNG</option>
     </select><br>
 
-    <!-- Inputs -->
+    <!-- INPUTS -->
     <input type="number" id="distance" placeholder="Distance (km)"><br>
     <input type="number" id="mileage" placeholder="Mileage (km/l)"><br>
     <input type="number" id="price" placeholder="Fuel Price (₹/l)"><br>
@@ -56,30 +61,41 @@
 </div>
 
 <script>
+// Auto mileage based on vehicle
+function setMileage() {
+    let v = document.getElementById("vehicle").value;
+
+    if (v === "bike") document.getElementById("mileage").value = 50;
+    else if (v === "car") document.getElementById("mileage").value = 20;
+    else if (v === "auto") document.getElementById("mileage").value = 25;
+    else if (v === "bus") document.getElementById("mileage").value = 5;
+    else if (v === "truck") document.getElementById("mileage").value = 4;
+    else if (v === "tractor") document.getElementById("mileage").value = 6;
+    else if (v === "van") document.getElementById("mileage").value = 15;
+}
+
+// Auto fuel price
 function setFuelPrice() {
     let fuel = document.getElementById("fuelType").value;
 
-    if (fuel === "petrol") {
-        document.getElementById("price").value = 108;
-    } else if (fuel === "diesel") {
-        document.getElementById("price").value = 95;
-    } else if (fuel === "gas") {
-        document.getElementById("price").value = 75;
-    }
+    if (fuel === "petrol") document.getElementById("price").value = 108;
+    else if (fuel === "diesel") document.getElementById("price").value = 95;
+    else if (fuel === "cng") document.getElementById("price").value = 75;
 }
 
+// Calculation
 function calculate() {
     let d = document.getElementById("distance").value;
     let m = document.getElementById("mileage").value;
     let p = document.getElementById("price").value;
-    let vehicle = document.getElementById("vehicle").value;
+    let v = document.getElementById("vehicle").value;
 
-    if (d && m && p && vehicle) {
+    if (d && m && p && v) {
         let fuel = d / m;
         let cost = fuel * p;
 
         document.getElementById("result").innerHTML =
-            "Vehicle: " + vehicle.toUpperCase() + "<br>" +
+            "Vehicle: " + v.toUpperCase() + "<br>" +
             "Fuel Needed: " + fuel.toFixed(2) + " L<br>" +
             "Total Cost: ₹" + cost.toFixed(2);
     } else {
