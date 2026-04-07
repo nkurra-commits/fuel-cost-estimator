@@ -10,17 +10,18 @@
             text-align: center;
         }
         .box {
-            margin-top: 100px;
+            margin-top: 60px;
         }
-        input, button {
+        input, select, button {
             padding: 10px;
             margin: 10px;
-            width: 200px;
+            width: 220px;
         }
         button {
             background: #007bff;
             color: white;
             border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -29,6 +30,22 @@
 <div class="box">
     <h1>Fuel Cost Estimator 🚗</h1>
 
+    <!-- Vehicle Type -->
+    <select id="vehicle">
+        <option value="">Select Vehicle</option>
+        <option value="bike">Bike</option>
+        <option value="car">Car</option>
+    </select><br>
+
+    <!-- Fuel Type -->
+    <select id="fuelType" onchange="setFuelPrice()">
+        <option value="">Select Fuel Type</option>
+        <option value="petrol">Petrol</option>
+        <option value="diesel">Diesel</option>
+        <option value="gas">Gas (CNG)</option>
+    </select><br>
+
+    <!-- Inputs -->
     <input type="number" id="distance" placeholder="Distance (km)"><br>
     <input type="number" id="mileage" placeholder="Mileage (km/l)"><br>
     <input type="number" id="price" placeholder="Fuel Price (₹/l)"><br>
@@ -39,19 +56,34 @@
 </div>
 
 <script>
+function setFuelPrice() {
+    let fuel = document.getElementById("fuelType").value;
+
+    if (fuel === "petrol") {
+        document.getElementById("price").value = 108;
+    } else if (fuel === "diesel") {
+        document.getElementById("price").value = 95;
+    } else if (fuel === "gas") {
+        document.getElementById("price").value = 75;
+    }
+}
+
 function calculate() {
     let d = document.getElementById("distance").value;
     let m = document.getElementById("mileage").value;
     let p = document.getElementById("price").value;
+    let vehicle = document.getElementById("vehicle").value;
 
-    if (d && m && p) {
+    if (d && m && p && vehicle) {
         let fuel = d / m;
         let cost = fuel * p;
 
         document.getElementById("result").innerHTML =
-            "Fuel: " + fuel.toFixed(2) + " L<br>Cost: ₹" + cost.toFixed(2);
+            "Vehicle: " + vehicle.toUpperCase() + "<br>" +
+            "Fuel Needed: " + fuel.toFixed(2) + " L<br>" +
+            "Total Cost: ₹" + cost.toFixed(2);
     } else {
-        document.getElementById("result").innerHTML = "Enter all values!";
+        document.getElementById("result").innerHTML = "Please fill all fields!";
     }
 }
 </script>
