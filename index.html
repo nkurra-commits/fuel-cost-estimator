@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fuel Cost Estimator</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #111;
+            color: white;
+            text-align: center;
+        }
+        .box {
+            margin-top: 100px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>Fuel Cost Estimator 🚗</h1>
+
+    <input type="number" id="distance" placeholder="Distance (km)"><br>
+    <input type="number" id="mileage" placeholder="Mileage (km/l)"><br>
+    <input type="number" id="price" placeholder="Fuel Price (₹/l)"><br>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <h2 id="result"></h2>
+</div>
+
+<script>
+function calculate() {
+    let d = document.getElementById("distance").value;
+    let m = document.getElementById("mileage").value;
+    let p = document.getElementById("price").value;
+
+    if (d && m && p) {
+        let fuel = d / m;
+        let cost = fuel * p;
+
+        document.getElementById("result").innerHTML =
+            "Fuel: " + fuel.toFixed(2) + " L<br>Cost: ₹" + cost.toFixed(2);
+    } else {
+        document.getElementById("result").innerHTML = "Enter all values!";
+    }
+}
+</script>
+
+</body>
+</html>
